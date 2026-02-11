@@ -3,264 +3,297 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>💘 Tracey?</title>
+  <title>Valentine 💘</title>
   <style>
-    :root { --yesScale: 1; --overlay: 0.45; }
+    :root { --yesScale: 1; }
     * { box-sizing: border-box; }
     body {
-      margin: 0; min-height: 100vh;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      overflow: hidden;
-      background: #000; color: #fff;
-    }
-
-    /* Background */
-    .bg {
-      position: fixed; inset: 0;
-      background-size: cover;
-      background-position: center;
-      transform: scale(1.02);
-      transition: opacity 800ms ease;
-    }
-    .bg::after {
-      content: ""; position: absolute; inset: 0;
-      background: rgba(0,0,0,var(--overlay));
-    }
-
-    /* Content */
-    .wrap {
-      position: relative; z-index: 2;
+      margin: 0;
       min-height: 100vh;
-      display: grid; place-items: center;
-      padding: 24px; text-align: center;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: #111;
+      background: radial-gradient(1200px 800px at 20% 10%, #ffe6ee 0%, transparent 60%),
+                  radial-gradient(1200px 800px at 80% 20%, #e8f0ff 0%, transparent 55%),
+                  #fafafa;
+      overflow: hidden;
     }
-    .card {
-      width: min(720px, 95vw);
-      padding: 28px;
-      border-radius: 22px;
-      backdrop-filter: blur(10px);
-      background: rgba(255,255,255,0.10);
-      border: 1px solid rgba(255,255,255,0.20);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-    }
-    h1 { margin: 0 0 10px; font-size: clamp(28px, 4vw, 44px); }
-    .sub { margin: 0 0 18px; opacity: 0.92; font-size: clamp(14px, 2vw, 18px); }
 
-    .btnRow {
-      display: flex;
-      gap: 14px;
-      justify-content: center;
+    .wrap {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px 40px;
+    }
+
+    .layout {
+      width: min(980px, 96vw);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
       align-items: center;
-      flex-wrap: wrap;
-      margin-top: 14px;
+    }
+
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    /* Photo strip */
+    .photos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 860px) {
+      .photos { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .photo {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 16px;
+      padding: 10px;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+      transform: rotate(var(--rot));
+      transition: transform 180ms ease;
+    }
+    .photo:hover { transform: rotate(var(--rot)) translateY(-2px); }
+
+    .photo img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+      background: #f2f2f2;
+    }
+    @media (max-width: 860px) {
+      .photo img { height: 150px; }
+    }
+
+    .caption {
+      margin-top: 8px;
+      font-size: 13px;
+      color: rgba(0,0,0,0.6);
+      text-align: center;
+    }
+
+    /* Card */
+    .card {
+      background: #ffffffcc;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.10);
       position: relative;
     }
 
-    button {
-      border: none;
-      border-radius: 999px;
-      padding: 14px 22px;
-      font-size: 18px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
+    h1 {
+      margin: 0 0 8px;
+      font-size: 34px;
+      line-height: 1.1;
+      letter-spacing: -0.4px;
+    }
+    .sub {
+      margin: 0 0 18px;
+      font-size: 16px;
+      color: rgba(0,0,0,0.65);
     }
 
+    .btnRow {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      position: relative;
+      padding-top: 6px;
+    }
+
+    button {
+      border: 1px solid rgba(0,0,0,0.12);
+      background: #fff;
+      color: #111;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 16px;
+      font-weight: 650;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+    }
+    button:active { transform: translateY(1px); }
+
     #yesBtn {
-      background: linear-gradient(135deg, #ff4d6d, #ff8fab);
+      background: #ff3b7a;
+      border-color: transparent;
       color: #fff;
-      box-shadow: 0 14px 40px rgba(255, 77, 109, 0.35);
+      box-shadow: 0 10px 22px rgba(255,59,122,0.25);
       transform: scale(var(--yesScale));
       transform-origin: center;
     }
-    #yesBtn:active { transform: scale(calc(var(--yesScale) * 0.98)); }
 
-    /* NO starts normal, then becomes a "runner" */
     #noBtn {
-      background: rgba(255,255,255,0.18);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.25);
+      background: #fff;
     }
-    #noBtn.runner {
-      position: fixed; /* so it can run anywhere on screen */
+
+    .meta {
+      margin-top: 14px;
+      font-size: 13px;
+      color: rgba(0,0,0,0.55);
+      min-height: 18px;
+    }
+
+    /* Floating No button (clickable) */
+    #noBtn.floating {
+      position: fixed;
       left: 50%;
-      top: 62%;
+      top: 70%;
       transform: translate(-50%, -50%);
-      z-index: 50;
+      z-index: 20;
     }
 
-    /* Fullscreen YES takeover */
-    .takeover {
-      position: fixed; inset: 0;
-      z-index: 9999;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,0.55);
-      backdrop-filter: blur(8px);
+    /* Success screen */
+    .success {
+      text-align: center;
+      padding: 28px 18px;
     }
-    .takeover.show { display: flex; }
-
-    .bigYes {
-      width: min(92vw, 900px);
-      height: min(70vh, 520px);
-      border-radius: 32px;
-      font-size: clamp(28px, 6vw, 60px);
-      box-shadow: 0 30px 100px rgba(255, 77, 109, 0.45);
-      background: linear-gradient(135deg, #ff4d6d, #ff8fab);
-      color: #fff;
+    .success h2 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      letter-spacing: -0.4px;
     }
-
-    .footerNote { margin-top: 14px; opacity: 0.8; font-size: 14px; }
+    .success p {
+      margin: 0;
+      font-size: 16px;
+      color: rgba(0,0,0,0.65);
+    }
   </style>
 </head>
 <body>
-  <div class="bg" id="bg"></div>
-
   <div class="wrap">
-    <div class="card" id="card">
-      <h1>Baby, will you be my Valentine? 💘</h1>
-      <p class="sub" id="sub">Baby, pick “Yes” 😌</p>
-
-      <div class="btnRow" id="btnRow">
-        <button id="yesBtn">Yes 💞</button>
-        <button id="noBtn">No 🙃</button>
+    <div class="layout">
+      <div class="photos">
+        <div class="photo" style="--rot:-1.5deg">
+          <img src="photos/1.jpg" alt="photo 1" />
+          <div class="caption">us</div>
+        </div>
+        <div class="photo" style="--rot:1.2deg">
+          <img src="photos/2.jpg" alt="photo 2" />
+          <div class="caption">being cute</div>
+        </div>
+        <div class="photo" style="--rot:-0.6deg">
+          <img src="photos/3.jpg" alt="photo 3" />
+          <div class="caption">baby energy</div>
+        </div>
       </div>
 
-      <div class="footerNote" id="note"></div>
+      <div class="card" id="card">
+        <h1>Tracey, will you be my Valentine?</h1>
+        <p class="sub" id="sub">Baby, say yes 💘</p>
+
+        <div class="btnRow">
+          <button id="yesBtn">Yes</button>
+          <button id="noBtn">No</button>
+        </div>
+
+        <div class="meta" id="meta"></div>
+      </div>
     </div>
   </div>
 
-  <div class="takeover" id="takeover">
-    <button class="bigYes" id="bigYes">YES 💖</button>
-  </div>
-
   <script>
-    // Put these files at:
-    // photos/1.jpg, photos/2.jpg, photos/3.jpg
-    const photos = ["photos/1.jpg", "photos/2.jpg", "photos/3.jpg"];
-
-    // Background slideshow
-    const bg = document.getElementById("bg");
-    let idx = Math.floor(Math.random() * photos.length);
-
-    function setBg(i, fade=true) {
-      if (!photos.length) return;
-      if (fade) bg.style.opacity = "0";
-      setTimeout(() => {
-        bg.style.backgroundImage = `url('${photos[i]}')`;
-        bg.style.opacity = "1";
-      }, fade ? 250 : 0);
-    }
-    setBg(idx, false);
-    setInterval(() => {
-      idx = (idx + 1) % photos.length;
-      setBg(idx, true);
-    }, 4500);
-
-    // YES/NO logic
     const yesBtn = document.getElementById("yesBtn");
     const noBtn  = document.getElementById("noBtn");
     const sub    = document.getElementById("sub");
-    const note   = document.getElementById("note");
-    const takeover = document.getElementById("takeover");
-    const bigYes = document.getElementById("bigYes");
+    const meta   = document.getElementById("meta");
     const card   = document.getElementById("card");
 
     let noClicks = 0;
     let yesScale = 1;
-    let runnerMode = false;
 
     const noLines = [
-      "So you got other plans or sum?",
-      "Baby be fr rn",
-      "Stop playing",
-      "Ima beat your ahhhhh",
-      "I’m gonna keep asking 😤",
-      "Last chance 😌",
-      "You did this to yourself 😈"
+      "Baby… you sure?",
+      "Ok don’t play with me 😐",
+      "Tracey… c’mon 😭",
+      "This is getting suspicious 🤨",
+      "I’m still here asking 😌",
+      "Last chance.",
+      "Alright. Enough."
     ];
 
     function applyScale() {
       document.documentElement.style.setProperty("--yesScale", yesScale.toFixed(3));
     }
 
-    function showTakeover() { takeover.classList.add("show"); }
-
     function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
 
-    // Move the NO button somewhere annoying but still tappable.
-    function teleportNoButton() {
+    // Move NO somewhere else, but NOT instantly on hover.
+    // Rule: it only moves after a click, and we animate it a bit.
+    function floatNoButton() {
       const padding = 14;
       const rect = noBtn.getBoundingClientRect();
 
-      // Keep it inside the viewport.
       const maxX = window.innerWidth  - rect.width  - padding;
       const maxY = window.innerHeight - rect.height - padding;
 
-      // Avoid covering the Yes button area too often: bias to upper half a bit.
-      const x = Math.random() * maxX + padding;
-      const y = Math.random() * (maxY * 0.80) + padding; // top 80%
+      // Make it drift around the center-ish area so it doesn't go off-screen.
+      const x = (Math.random() * 0.7 + 0.15) * maxX + padding;
+      const y = (Math.random() * 0.55 + 0.25) * maxY + padding;
 
+      noBtn.style.transition = "left 260ms ease, top 260ms ease";
       noBtn.style.left = `${clamp(x, padding, maxX)}px`;
       noBtn.style.top  = `${clamp(y, padding, maxY)}px`;
+      setTimeout(() => { noBtn.style.transition = ""; }, 300);
     }
 
-    function enableRunnerMode() {
-      if (runnerMode) return;
-      runnerMode = true;
-      noBtn.classList.add("runner");
-      teleportNoButton();
-
-      // Desktop: run away on hover / mouse move near it.
-      noBtn.addEventListener("mouseenter", teleportNoButton);
-      noBtn.addEventListener("mousemove", teleportNoButton);
-
-      // Mobile: run away when they try to tap it (touchstart happens before click).
-      noBtn.addEventListener("touchstart", (e) => {
-        e.preventDefault();
-        teleportNoButton();
-      }, { passive: false });
-
-      note.textContent = "No is now in escape mode 😈";
+    function enableFloatingMode() {
+      if (noBtn.classList.contains("floating")) return;
+      noBtn.classList.add("floating");
+      // put it near where it started, then it can drift
+      noBtn.style.left = "50%";
+      noBtn.style.top = "70%";
     }
 
     noBtn.addEventListener("click", () => {
       noClicks++;
 
-      // After first click: activate runner mode.
-      if (noClicks >= 1) enableRunnerMode();
+      // After first click, NO becomes a floater but stays clickable.
+      if (noClicks >= 1) enableFloatingMode();
 
-      // Make YES grow aggressively
-      yesScale = Math.min(12, yesScale * 1.28 + 0.18);
+      // Grow YES but not insanely fast
+      yesScale = Math.min(6, yesScale * 1.18 + 0.08);
       applyScale();
 
       sub.textContent = noLines[Math.min(noLines.length - 1, noClicks - 1)];
-      if (!runnerMode) note.textContent = `No clicks: ${noClicks}`;
+      meta.textContent = `No clicks: ${noClicks}`;
 
-      if (yesScale >= 6) showTakeover();
+      // After each click, float away a bit
+      if (noBtn.classList.contains("floating")) {
+        // slight delay so the click feels registered
+        setTimeout(floatNoButton, 120);
+      }
+
+      // If YES is basically huge, nudge the experience toward YES
+      if (yesScale >= 4.5) {
+        meta.textContent = "Ok. The universe has spoken.";
+      }
     });
 
     function accept() {
       card.innerHTML = `
-        <h1>YAYYYYY BABY 💖</h1>
-        <p class="sub">Ok Tracey, you’re locked in. Valentine’s is ours 😌</p>
-        <p class="footerNote">Screenshot this and send it to me ❤️</p>
+        <div class="success">
+          <h2>YAYYYYY BABY 💖</h2>
+          <p>Ok Tracey, you’re locked in. Valentine’s is ours 😌</p>
+        </div>
       `;
-      takeover.classList.remove("show");
-      // Stop the runner if it exists
       try { noBtn.remove(); } catch {}
     }
 
     yesBtn.addEventListener("click", accept);
-    bigYes.addEventListener("click", accept);
 
-    // Keep runner inside bounds on rotate/resize
     window.addEventListener("resize", () => {
-      if (runnerMode) teleportNoButton();
+      // Keep floating NO in bounds on resize
+      if (noBtn.classList.contains("floating")) floatNoButton();
     });
   </script>
 </body>
