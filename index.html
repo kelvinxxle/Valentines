@@ -300,7 +300,7 @@
 
       // Faster growth: jumps big and compounds quickly
       // (reaches takeover in ~4-6 "No" clicks)
-      yesScale = yesScale * 1.55 + 0.10;
+      yesScale = yesScale * 2.2 + 0.10;
       applyScale();
 
       sub.textContent = noLines[Math.min(noLines.length - 1, noClicks - 1)];
@@ -311,7 +311,7 @@
       }
 
       // Once YES is visually huge, switch to true full-screen button
-      if (yesScale >= 5.6) showTakeover();
+      if (yesScale >= 50) showTakeover();
     });
 
     function accept() {
