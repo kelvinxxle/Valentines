@@ -190,11 +190,11 @@
         </div>
         <div class="photo" style="--rot:1.2deg">
           <img id="p2" alt="photo 2" />
-          <div class="caption">being cute</div>
+          <div class="caption">LA type shit</div>
         </div>
         <div class="photo" style="--rot:-0.6deg">
           <img id="p3" alt="photo 3" />
-          <div class="caption">baby energy</div>
+          <div class="caption">mwahaha</div>
         </div>
       </div>
 
@@ -252,7 +252,7 @@
     let yesScale = 1;
 
     const noLines = [
-      "Baby… you sure?",
+      "Acting like you got other plans or sum",
       "Ok don’t play with me 😐",
       "Tracey… c’mon 😭",
       "This is getting suspicious 🤨",
@@ -300,7 +300,7 @@
 
       // Faster growth: jumps big and compounds quickly
       // (reaches takeover in ~4-6 "No" clicks)
-      yesScale = yesScale * 1.45 + 0.25;
+      yesScale = yesScale * 1.55 + 0.10;
       applyScale();
 
       sub.textContent = noLines[Math.min(noLines.length - 1, noClicks - 1)];
@@ -311,14 +311,14 @@
       }
 
       // Once YES is visually huge, switch to true full-screen button
-      if (yesScale >= 4.2) showTakeover();
+      if (yesScale >= 5.6) showTakeover();
     });
 
     function accept() {
       card.innerHTML = `
         <div class="success">
           <h2>YAYYYYY BABY 💖</h2>
-          <p>Ok Tracey, you’re locked in. Valentine’s is ours 😌</p>
+          <p>Ok Baby Tracey, we're locked in! 😌</p>
         </div>
       `;
       takeover.classList.remove("show");
